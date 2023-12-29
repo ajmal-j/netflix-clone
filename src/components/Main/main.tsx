@@ -5,6 +5,8 @@ import { baseImageUrl } from "../../utils/helper";
 // @ts-ignore
 import movieTrailer from "movie-trailer";
 import YouTube from "react-youtube";
+import { FaPlay } from "react-icons/fa";
+import { MdWatchLater } from "react-icons/md";
 
 export default function Main() {
   const [movies, setMovies] = useState([]);
@@ -40,26 +42,28 @@ export default function Main() {
   };
   return (
     <>
-      <div className='w-full h-[550px] text-white'>
+      <div className='w-full h-[700px] text-white'>
         <div className='w-full h-full'>
-          <div className='absolute w-full h-[550px] bg-gradient-to-r from-black '></div>
+          <div className='absolute w-full h-[700px] bg-gradient-to-r from-black '></div>
           {movie && (
             <img
-              className='w-full h-full object-cover'
+              className='w-full h-full object-cover '
               src={`${baseImageUrl}/original${movie?.backdrop_path}`}
               alt={movie?.title}
             />
           )}
           <div className='absolute w-full top-[20%] p-4 md:p-8'>
             <h1 className="text-3xl  md:text-4xl font-b'">{movie?.title}</h1>
-            <div className='my-4'>
+            <div className='my-4 flex items-center gap-2 '>
               <button
                 onClick={handleMovieClick}
-                className='border bg-gray-300 text-black py-2 px-4'
+                className='border hover:bg-white flex items-center gap-2 bg-gray-300 text-black py-2 px-4 transition-all duration-100'
               >
-                play
+                <FaPlay /> Play
               </button>
-              <button className='border  py-2 px-4 ms-2'>Watch Later</button>
+              <button className='border hover:bg-white hover:text-black flex items-center gap-2  py-2 px-4 ms-2  transition-all duration-300'>
+                <MdWatchLater /> Watch Later
+              </button>
             </div>
             <p className='text-gray-400 mb-2 text-sm'>
               Released : {movie?.release_date}

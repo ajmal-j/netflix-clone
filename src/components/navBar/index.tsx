@@ -1,16 +1,36 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../../context/authProvider";
 
 const NavBar = () => {
   const [nav, setNav] = useState<boolean>(false);
+
+  const handleScroll = useCallback(() => {
+    if (window.scrollY > 100) {
+      setNav(true);
+    } else {
+      setNav(false);
+    }
+  }, [setNav]);
+
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 100) setNav(true);
-      else {
-        setNav(false);
-      }
-    });
-  }, []);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
+  const { user, logOut } = UserAuth();
+  const navigate = useNavigate();
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div
       className={`text-white  flex justify-between items-center px-3 fixed top-0 left-0 right-0 z-[100] ${
@@ -24,16 +44,29 @@ const NavBar = () => {
           className='w-[120px] bg'
         />
       </Link>
-      <div className=''>
-        <Link to={"/logIn"}>
-          <button className='px-3 py-2 cursor-pointer'>Log In</button>
-        </Link>
-        <Link to={"/signUp"}>
-          <button className=' px-3 py-2 text-red-500 font-bold text-xl cursor-pointer'>
-            Sign Up
+      {user?.email ? (
+        <div className=''>
+          <button onClick={handleLogOut} className='px-3 py-2 cursor-pointer'>
+            Log Out
           </button>
-        </Link>
-      </div>
+          <Link to={"/account"}>
+            <button className=' px-3 py-2 text-red-500 font-bold text-xl cursor-pointer'>
+              Account
+            </button>
+          </Link>
+        </div>
+      ) : (
+        <div className=''>
+          <Link to={"/logIn"}>
+            <button className='px-3 py-2 cursor-pointer'>Log In</button>
+          </Link>
+          <Link to={"/signUp"}>
+            <button className=' px-3 py-2 text-red-500 font-bold text-xl cursor-pointer'>
+              Sign Up
+            </button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

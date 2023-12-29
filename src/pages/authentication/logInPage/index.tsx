@@ -1,6 +1,23 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../../../context/authProvider";
 
 export default function LogIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { logIn, user } = UserAuth();
+  const navigate = useNavigate();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await logIn(email, password);
+      navigate("/");
+    } catch (error: any) {
+      console.log(error);
+      alert(error.message);
+    }
+  };
+
   return (
     <div className='w-full h-screen'>
       <img
@@ -13,13 +30,19 @@ export default function LogIn() {
         <div className='max-w-[450px] h-[600px] mx-auto bg-black/80 text-white'>
           <div className='max-w-[320px] mx-auto py-16'>
             <h1 className='text-3xl font-bold'>Sign In</h1>
-            <form className='w-full flex flex-col py-4'>
+            <form onSubmit={handleSubmit} className='w-full flex flex-col py-4'>
               <input
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
                 className='p-3 my-2 bg-gray-700 rounded '
                 type='email'
                 placeholder='Email'
               />
               <input
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
                 className='p-3 my-2 bg-gray-700 rounded '
                 type='password'
                 placeholder='Password'
@@ -35,9 +58,7 @@ export default function LogIn() {
                 <p>Need help?</p>
               </div>
               <div className='py-8'>
-                <span className=' text-gray-600'>
-                  New to Netflix?
-                </span>{" "}
+                <span className=' text-gray-600'>New to Netflix?</span>{" "}
                 <Link to='/signUp'>Sign Up</Link>
               </div>
             </form>
