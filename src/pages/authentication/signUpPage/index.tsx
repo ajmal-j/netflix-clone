@@ -4,16 +4,19 @@ import { useState } from "react";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
-  const { signUp, user } = UserAuth();
+  const { signUp } = UserAuth();
   const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await signUp(email, password);
       navigate("/");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      let i = error.message.indexOf("auth/") + 5;
+      let errorMessage = error.message.slice(i, error.message.length - 2);
+      setMessage(errorMessage);
     }
   };
   return (
@@ -45,6 +48,12 @@ export default function SignUp() {
                 type='password'
                 placeholder='Password'
               />
+              <span
+                onDoubleClick={() => setMessage("")}
+                className='text-red-500 text-sm text-center pt-2'
+              >
+                {message ? message : "\u00A0"}
+              </span>
               <button className='bg-red-600 py-3 my-6 rounded font-bold'>
                 Sign Up
               </button>

@@ -1,4 +1,4 @@
-import { requests } from "../utils/request";
+import React from "react";
 
 export type titles =
   | "Popular"
@@ -6,3 +6,5 @@ export type titles =
   | "Trending"
   | "Horror"
   | "Upcoming";
+
+export type reactState<T> = React.Dispatch<React.SetStateAction<T>>;

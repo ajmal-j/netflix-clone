@@ -9,6 +9,8 @@ import { CiCircleChevLeft, CiCircleChevRight } from "react-icons/ci";
 import movieTrailer from "movie-trailer";
 import YouTube from "react-youtube";
 import { useMovie } from "../../context/movieProvider";
+import { options } from "../../utils/helper";
+
 
 type Row = {
   title: titles;
@@ -20,14 +22,6 @@ export default function Row({ title, url, id, row_id }: Row) {
   const [movies, setMovies] = useState([]);
   const [movieUrl, setMovieUrl] = useState<string>("");
   const { movieTitle, setMovieTitle, divId, setDivId } = useMovie();
-
-  const options = {
-    height: "390",
-    width: "100%",
-    playerVars: {
-      autoplay: 1,
-    },
-  };
 
   useEffect(() => {
     axios.get(requests[url]).then((response) => {

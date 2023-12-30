@@ -4,17 +4,21 @@ import { UserAuth } from "../../../context/authProvider";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
-  const { logIn, user } = UserAuth();
+  const { logIn } = UserAuth();
   const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await logIn(email, password);
+      setMessage("");
       navigate("/");
     } catch (error: any) {
-      console.log(error);
-      alert(error.message);
+      // console.log(error);
+      let i = error.message.indexOf("auth/") + 5;
+      let errorMessage = error.message.slice(i, error.message.length - 2);
+      setMessage(errorMessage);
     }
   };
 
@@ -47,6 +51,13 @@ export default function LogIn() {
                 type='password'
                 placeholder='Password'
               />
+              <span
+                onDoubleClick={() => setMessage("")}
+                className='text-red-500 text-sm text-center pt-2'
+              >
+                {message ? message : "\u00A0"}
+              </span>
+
               <button className='bg-red-600 py-3 my-6 rounded font-bold'>
                 Sign In
               </button>

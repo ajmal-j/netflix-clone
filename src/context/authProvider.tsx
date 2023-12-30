@@ -5,14 +5,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { auth, app } from "../auth/firebase";
+import { auth } from "../auth/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
 
 const AuthContext = createContext<any>(undefined);
 
@@ -37,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   });
   return (
-    <AuthContext.Provider value={{signUp, logOut, logIn, user}}>
+    <AuthContext.Provider value={{ signUp, logOut, logIn, user }}>
       {children}
     </AuthContext.Provider>
   );

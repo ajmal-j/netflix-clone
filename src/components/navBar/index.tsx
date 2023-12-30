@@ -30,30 +30,24 @@ const NavBar = () => {
       console.log(error);
     }
   };
-
+  let name = user?.email;
   return (
     <div
-      className={`text-white  flex justify-between items-center px-3 fixed top-0 left-0 right-0 z-[100] ${
+      className={`text-white flex justify-between items-center px-3 fixed top-0 left-0 right-0 z-[100] ${
         nav && "bg-black"
       } transition-colors duration-700`}
     >
       <Link to={"/"}>
-        <img
-          src='https://assets.stickpng.com/images/580b57fcd9996e24bc43c529.png'
-          alt='logo'
-          className='w-[120px] bg'
-        />
+        <img src='/main.png' alt='logo' className='w-[100px] md:w-[160px] bg' />
       </Link>
       {user?.email ? (
         <div className=''>
           <button onClick={handleLogOut} className='px-3 py-2 cursor-pointer'>
             Log Out
           </button>
-          <Link to={"/account"}>
-            <button className=' px-3 py-2 text-red-500 font-bold text-xl cursor-pointer'>
-              Account
-            </button>
-          </Link>
+          <button className=' px-3 py-2 text-red-500 font-bold text-xl cursor-pointer'>
+            {name?.split("").splice(0, 6).join("").concat("...")}
+          </button>
         </div>
       ) : (
         <div className=''>
@@ -61,7 +55,7 @@ const NavBar = () => {
             <button className='px-3 py-2 cursor-pointer'>Log In</button>
           </Link>
           <Link to={"/signUp"}>
-            <button className=' px-3 py-2 text-red-500 font-bold text-xl cursor-pointer'>
+            <button className=' px-3 py-2 bg-black text-red-600 text-lg rounded cursor-pointer '>
               Sign Up
             </button>
           </Link>

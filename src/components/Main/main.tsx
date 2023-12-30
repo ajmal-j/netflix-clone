@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import requests from "../../utils/request";
 import axios from "axios";
-import { baseImageUrl } from "../../utils/helper";
+import { baseImageUrl, options } from "../../utils/helper";
 // @ts-ignore
 import movieTrailer from "movie-trailer";
 import YouTube from "react-youtube";
@@ -9,7 +9,7 @@ import { FaPlay } from "react-icons/fa";
 import { MdWatchLater } from "react-icons/md";
 
 export default function Main() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<[]>([]);
   const [videoId, setVideoId] = useState<string>("");
   const [movie, setBannerMovie] = useState<any>();
 
@@ -19,16 +19,10 @@ export default function Main() {
     });
   }, []);
   useEffect(() => {
-    const movie: any = movies[Math.floor(Math.random() * movies.length)];
+    const movie: {} = movies[Math.floor(Math.random() * movies.length)];
     setBannerMovie(movie);
   }, [movies]);
-  const options = {
-    height: "390",
-    width: "100%",
-    playerVars: {
-      autoplay: 1,
-    },
-  };
+
   const handleMovieClick = () => {
     if (!movie) return;
     movieTrailer(movie?.title)
