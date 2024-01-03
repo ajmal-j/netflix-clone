@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../context/authProvider";
+import toast from "react-hot-toast";
 
 const NavBar = () => {
   const [nav, setNav] = useState<boolean>(false);
-
   const handleScroll = useCallback(() => {
     if (window.scrollY > 100) {
       setNav(true);
@@ -25,7 +25,8 @@ const NavBar = () => {
   const handleLogOut = async () => {
     try {
       await logOut();
-      navigate("/");
+      toast.success("logOut successful");
+      navigate("/logIn");
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +39,7 @@ const NavBar = () => {
       } transition-colors duration-700`}
     >
       <Link to={"/"}>
-        <img src='/main.png' alt='logo' className='w-[100px] md:w-[160px] bg' />
+        <img src='/main.png' alt='logo' className='w-[100px] md:w-[120px] ' />
       </Link>
       {user?.email ? (
         <div className=''>

@@ -1,8 +1,19 @@
+import { FaPlay } from "react-icons/fa";
 import { baseImageUrl } from "../../../utils/helper";
+import { UserAuth } from "../../../context/authProvider";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Card({ item, setMovieTitle, id, setDivId }: any) {
   if (!item?.backdrop_path) return null;
+  const navigate=useNavigate()
+  const { user } = UserAuth();
   const handleClick = () => {
+    if (!user) {
+      toast.error("Subscribe to play trailer");
+      navigate('/logIn')
+      return;
+    }
     setMovieTitle(item?.title);
     setDivId(id);
   };
@@ -24,8 +35,11 @@ export default function Card({ item, setMovieTitle, id, setDivId }: any) {
         onClick={handleClick}
         className='absolute rounded transition-all duration-100 top-0 left-0 w-full h-full hover:bg-black/60 opacity-0 hover:opacity-100 text-white'
       >
-        <p className='white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center'>
+        <p className='white-space-normal text-xs md:text-sm font-bold flex flex-col justify-center items-center h-full text-center'>
           {title}
+          <span className='text-white/60 pt-0 text-xs flex flex-col  gap-2'>
+            <FaPlay className='mx-auto mt-2' /> click to play trailer
+          </span>
         </p>
       </div>
     </div>

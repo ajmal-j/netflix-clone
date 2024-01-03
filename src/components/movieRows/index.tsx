@@ -11,7 +11,6 @@ import YouTube from "react-youtube";
 import { useMovie } from "../../context/movieProvider";
 import { options } from "../../utils/helper";
 
-
 type Row = {
   title: titles;
   url: keyof typeof requests;

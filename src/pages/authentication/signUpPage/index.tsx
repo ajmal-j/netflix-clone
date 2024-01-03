@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../../context/authProvider";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function SignUp() {
     try {
       await signUp(email, password);
       navigate("/");
+      toast.success("SignUp successful");
     } catch (error: any) {
       let i = error.message.indexOf("auth/") + 5;
       let errorMessage = error.message.slice(i, error.message.length - 2);
@@ -20,14 +22,14 @@ export default function SignUp() {
     }
   };
   return (
-    <div className='w-full h-screen'>
+    <div className='w-full h-full '>
       <img
-        className='hidden sm:block absolute w-full h-full object-cover'
+        className='hidden sm:block absolute w-full h-full object-cover '
         src='https://assets.nflxext.com/ffe/siteui/vlv3/c31c3123-3df7-4359-8b8c-475bd2d9925d/15feb590-3d73-45e9-9e4a-2eb334c83921/IN-en-20231225-popsignuptwoweeks-perspective_alpha_website_large.jpg'
         alt='signUpBackground'
       />
-      <div className='top-0 left-0 fixed w-full h-screen bg-black/50'></div>
-      <div className='w-full fixed  px-4 py-24 z-50'>
+      <div className='top-0  left-0 fixed w-full h-screen bg-black/50'></div>
+      <div className='w-full fixed px-4 py-24 z-50'>
         <div className='max-w-[450px] h-[600px] mx-auto bg-black/80 text-white'>
           <div className='max-w-[320px] mx-auto py-16'>
             <h1 className='text-3xl font-bold'>Sign Up</h1>

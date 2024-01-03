@@ -8,6 +8,7 @@ import SignUp from "./pages/authentication/signUpPage";
 import { AuthProvider } from "./context/authProvider";
 import ProtectedRoute from "./auth/protectedRoute";
 import Account from "./pages/account";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -30,6 +31,17 @@ function App() {
           </Routes>
         </MovieProvider>
       </AuthProvider>
+      <Toaster
+        position='top-right'
+        reverseOrder={false}
+        toastOptions={{
+          duration: 2000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+        }}
+      />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../../../context/authProvider";
+import toast from "react-hot-toast";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export default function LogIn() {
       await logIn(email, password);
       setMessage("");
       navigate("/");
+      toast.success("LogIn successful");
     } catch (error: any) {
       // console.log(error);
       let i = error.message.indexOf("auth/") + 5;
@@ -23,7 +25,7 @@ export default function LogIn() {
   };
 
   return (
-    <div className='w-full h-screen'>
+    <div className='w-full h-full'>
       <img
         className='hidden sm:block absolute w-full h-full object-cover'
         src='https://assets.nflxext.com/ffe/siteui/vlv3/c31c3123-3df7-4359-8b8c-475bd2d9925d/15feb590-3d73-45e9-9e4a-2eb334c83921/IN-en-20231225-popsignuptwoweeks-perspective_alpha_website_large.jpg'

@@ -11,9 +11,17 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  UserCredential,
 } from "firebase/auth";
 
-const AuthContext = createContext<any>(undefined);
+type AuthContextTypes = {
+  user: any;
+  signUp: (email: string, password: string) => Promise<UserCredential>;
+  logOut: () => void;
+  logIn: (email: string, password: string) => Promise<UserCredential>;
+};
+
+const AuthContext = createContext<AuthContextTypes | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState({});
@@ -42,6 +50,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function UserAuth() {
-  return useContext(AuthContext);
+export function UserAuth(): AuthContextTypes {
+  const context = useContext<AuthContextTypes | undefined>(AuthContext);
+  if (!context) throw new Error("Context missing");
+  return context;
 }
+
